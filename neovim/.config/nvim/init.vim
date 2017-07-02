@@ -21,8 +21,6 @@ augroup END
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.local/share/nvim/plugged')
 
-
-
 "* Core Plugins
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
