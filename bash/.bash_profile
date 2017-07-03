@@ -4,4 +4,4 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-export EDITOR=nano
+export EDITOR=vim
