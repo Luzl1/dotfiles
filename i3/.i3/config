@@ -48,6 +48,9 @@ bindsym $mod+d exec --no-startup-id rofi -show run -i
 
 exec_always compton
 
+#FSearch
+bindsym $mod+y exec --no-startup-id fsearch
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -197,9 +200,15 @@ exec --no-startup-id $HOME/bin/autostart-i3.sh
 
 #Custom for Hangouts
 for_window [instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] floating enable
-# assign [class="crx_nckgahadagoaajjgafhacjanaoiihapd"] Chat
-for_window [class="Chromium" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move container to workspace 3
+for_window [class="Google-chrome-beta" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move container to workspace 3
 
+for_window [class="TelegramDesktop" instance="telegram-desktop"] floating enable
+for_window [class="TelegramDesktop" instance="telegram-desktop"] move container to workspace 3
+
+for_window [class="Signal" instance="signal"] floating enable
+for_window [class="Signal" instance="signal"] move container to workspace 3
+
+for_window [class="Fsearch" instance=hhsfsearch"] floating enable
 
 
 
