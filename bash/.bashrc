@@ -31,9 +31,9 @@ alias vi="nvim"
 PS1='[\u@\h \W]\$ '
 
 export EDITOR=nvim
-alias rgmp3='/home/ludwig/shellscripts/replaygain/mp3/rgmp3.sh'
-export LIBVA_DRIVER_NAME=vdpau
-export VDPAU_DRIVER=r600
+#alias rgmp3='/home/ludwig/shellscripts/replaygain/mp3/rgmp3.sh'
+#export LIBVA_DRIVER_NAME=vdpau
+#export VDPAU_DRIVER=r600
 eval "$(thefuck --alias)"
 export TERM=xterm-256color
 
