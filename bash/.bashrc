@@ -19,7 +19,8 @@ alias fgrep='fgrep --color=auto'
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 
 alias myip="curl http://ipecho.net/plain; echo"
-alias myip6="curl http://v6.ifconfig.co"
+#alias myip6="curl http://v6.ifconfig.co"
+alias myip6="curl v6.ident.me"
 
 alias spm="sudo pacman"
 alias top="htop"
