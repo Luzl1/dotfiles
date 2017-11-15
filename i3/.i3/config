@@ -181,27 +181,24 @@ bar {
 #mode dock
 }
 #Autostart
-exec --no-startup-id dropbox &
-# exec --no-startup-id urxvtd -q -f -o &
-exec --no-startup-id nextcloud &
-exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
-exec --no-startup-id wicd-client --tray
+# exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
+# exec --no-startup-id wicd-client --tray
 exec --no-startup-id /usr/bin/nm-applet
-exec --no-startup-id pasystray
 exec --no-startup-id $HOME/bin/autostart-i3.sh
-#exec --no-startup-id $HOME/bin/xplanet.sh
 
 
 
 
 
-#Custom for Hangouts
-for_window [instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] floating enable
-# assign [class="crx_nckgahadagoaajjgafhacjanaoiihapd"] Chat
-#for_window [class="Chromium" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move container to workspace 3
+#Custom for Chats
 for_window [class="TelegramDesktop" instance="telegram-desktop"] floating enable
-for_window [class="Google-chrome-beta" instance="crx_bikioccmkafdpakkkcpdbppfkghcmihk"] floating enable
+for_window [class="TelegramDesktop" instance="telegram-desktop"] move container to workspace 3
+
+for_window [class="Google-chrome-beta" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] floating enable
+for_window [class="Google-chrome-beta" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move container to workspace 3
+
 for_window [class="Signal" instance="signal"] floating enable
+for_window [class="Signal" instance="signal"] move container to workspace 3
 
 
 
