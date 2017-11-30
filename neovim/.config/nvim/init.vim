@@ -31,7 +31,7 @@ call plug#begin('~/.config/nvim/plugged')
 "* Core Plugins
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
 Plug 'tomtom/tcomment_vim'
 Plug 'rking/ag.vim'
