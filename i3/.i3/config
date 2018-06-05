@@ -185,6 +185,7 @@ bar {
 # exec --no-startup-id wicd-client --tray
 exec --no-startup-id /usr/bin/nm-applet
 exec --no-startup-id $HOME/bin/autostart-i3.sh
+exec --no-startup-id $HOME/bin/Nextcloud.AppImage
 
 
 
@@ -200,7 +201,8 @@ for_window [class="Google-chrome-beta" instance="crx_nckgahadagoaajjgafhacjanaoi
 for_window [class="Signal" instance="signal"] floating enable
 for_window [class="Signal" instance="signal"] move container to workspace 3
 
-
+for_window [class="Gajim" instance="gajim"] floating enable
+for_window [class="Gajim" instance="gajim"] move container to workspace 3
 
 
 
