@@ -140,8 +140,8 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 #Screenlock
-bindsym $mod+Control+l exec "~/bin/i3-fuzzylock.sh"
-exec xautolock -time 25 -locker '~/bin/i3-fuzzylock.sh' &
+# bindsym $mod+Control+l exec "~/bin/i3-fuzzylock.sh"
+# exec xautolock -time 25 -locker '~/bin/i3-fuzzylock.sh' &
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -172,26 +172,26 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    output eDP1
+    output Virtual1
 #status_command ~/bin/conky-i3.sh
 # status_command i3status
         font pango:Source Sans Pro, FontAwesome 8
         # font pango:Monospace, IconicIcons 8
         #status_command py3status -c ~/.i3status.conf
         status_command i3blocks
-        tray_output eDP1
+        tray_output Virtual1
 #position bottom
 #mode dock
 }
 #Autostart
-exec --no-startup-id dropbox &
+# exec --no-startup-id dropbox &
 # exec --no-startup-id urxvtd -q -f -o &
-exec --no-startup-id nextcloud &
-exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
-exec --no-startup-id wicd-client --tray
-# exec --no-startup-id volumeicon
+# exec --no-startup-id nextcloud &
+# exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
+# exec --no-startup-id wicd-client --tray
+exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
-exec --no-startup-id $HOME/bin/autostart-i3.sh
+# exec --no-startup-id $HOME/bin/autostart-i3.sh
 #exec --no-startup-id $HOME/bin/xplanet.sh
 
 
@@ -200,7 +200,7 @@ exec --no-startup-id $HOME/bin/autostart-i3.sh
 
 #Custom for Hangouts
 for_window [instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] floating enable
-for_window [class="Google-chrome-beta" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move container to workspace 3
+for_window [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move container to workspace 3
 
 for_window [class="TelegramDesktop" instance="telegram-desktop"] floating enable
 for_window [class="TelegramDesktop" instance="telegram-desktop"] move container to workspace 3
@@ -208,7 +208,11 @@ for_window [class="TelegramDesktop" instance="telegram-desktop"] move container 
 for_window [class="Signal" instance="signal"] floating enable
 for_window [class="Signal" instance="signal"] move container to workspace 3
 
-for_window [class="Fsearch" instance=hhsfsearch"] floating enable
+for_window [class="Fsearch" instance="fsearch"] floating enable
+
+for_window [class="Gajim" instance="gajim"] floating enable
+for_window [class="Gajim" instance="gajim"] move conatiner to workspace 3
+
 
 
 
