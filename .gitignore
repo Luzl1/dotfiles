@@ -1,0 +1,3 @@
+# neovim plugged plugin ignorieren
+neovim/.config/nvim/plugged/
+
