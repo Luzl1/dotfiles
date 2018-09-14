@@ -18,11 +18,11 @@ augroup END
 " * Plug
 " ***********************************************
 
-" auto-install vim-plug                                                                                                                
-if empty(glob('~/.config/nvim/autoload/plug.vim'))                                                                                    
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim                                                             
-  autocmd VimEnter * PlugInstall                                                                                                      
-endif                                              
+" auto-install vim-plug
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 " call plug#begin('~/.local/share/nvim/plugged')
@@ -37,8 +37,12 @@ Plug 'tomtom/tcomment_vim'
 Plug 'rking/ag.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'JazzCore/ctrlp-cmatcher'
-Plug 'nixprime/cpsm'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=OFF ./install.sh' }
 Plug 'sjl/gundo.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'wsdjeg/vim-fetch'
 
 "* Python
 Plug 'klen/python-mode'
@@ -49,6 +53,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'tomasr/molokai'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'joshdick/onedark.vim'
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -98,7 +103,8 @@ set background=dark
 let g:airline_powerline_fonts=1	"Make powerline symbols show
 let g:airline#extensions#tabline#enabled=1 "Make tabline show up
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme='powerlineish'
+" let g:airline_theme='powerlineish'
+let g:airline_theme='onedark'
 let g:netrw_liststyle=3
 
 
@@ -135,23 +141,24 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 "Use very fast pymatcher for file matching
 " let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 " let g:cpsm_match_empty_query = 0
 
+let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-if executable('ag')
-	let g:ctrlp_user_command = 'ag %s --files-with-matches -u -i --hidden -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
-
-	" ag is fast enough that CtrlP doesn't need to cache
-	let g:ctrlp_use_caching = 0
-else
-	" Fall back to using git ls-files if Ag is not available
-	let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-	let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-endif
+" if executable('ag')
+" 	let g:ctrlp_user_command = 'ag %s --files-with-matches -u -i --hidden -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
+"
+" 	" ag is fast enough that CtrlP doesn't need to cache
+" 	let g:ctrlp_use_caching = 0
+" else
+" 	" Fall back to using git ls-files if Ag is not available
+" 	let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+" 	let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+" endif
 
 " Default to filename searches - so that appctrl will find application
 " controller
@@ -163,6 +170,22 @@ let g:ctrlp_switch_buffer = 0
 
 " Set delay to prevent extra search
 let g:ctrlp_lazy_update = 350
+let g:ctrlp_use_caching = 0
+
+
+
+"*********************************************
+"*       fzf+ripgrep
+"*********************************************
+
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,.icons,node_modules,vendor}/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+
+
 
 "*********************************************
 "*      Python-mode settings
@@ -275,8 +298,26 @@ map <C-n> :NERDTreeToggle<CR>
 " For switching between many opened file by using ctrl+l or ctrl+h
 nmap <leader>b :ls<CR>:buffer<space>
 
+let g:onedark_terminal_italics = 1
 syntax on
-colorscheme molokai
+colorscheme onedark
 " colorscheme railscasts
-let g:molokai_original = 1
-let g:rehash256 = 1
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+"
+" Enable 24 bit color
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
