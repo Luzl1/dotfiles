@@ -24,8 +24,8 @@ alias myip6="curl v6.ident.me"
 alias spm="sudo pacman"
 alias top="htop"
 
-alias vim="nvim"
-alias vi="nvim"
+# alias vim="nvim"
+alias vi="vim"
 
 # source ~/.bash-powerline.sh
 
@@ -38,7 +38,7 @@ else
     PS1='\[\e[1;37m\]\u@\h\[\e[m\] \[\e[0;37m\]\w\[\e[m\] \[\e[1;31m\]$(__git_ps1 "(%s)")\[\e[m\] \[\e[1;37m\]\$ \[\e[m\]\[\e[1;37m\] '
 fi
 
-export EDITOR=nvim
+export EDITOR=vim
 #alias rgmp3='/home/ludwig/shellscripts/replaygain/mp3/rgmp3.sh'
 #export LIBVA_DRIVER_NAME=vdpau
 #export VDPAU_DRIVER=r600
@@ -94,5 +94,5 @@ sf() {
   exclude=".config,.git,node_modules,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist"
   rg_command='rg --column --line-number --no-heading --no-messages --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{'$include'}" -g "!{'$exclude'}/*"'
   files=`eval $rg_command $search | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}'`
-  [[ -n "$files" ]] && nvim $files
+  [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
