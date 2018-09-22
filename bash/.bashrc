@@ -24,7 +24,6 @@ alias myip6="curl v6.ident.me"
 alias spm="sudo pacman"
 alias top="htop"
 
-# alias vim="nvim"
 alias vi="vim"
 
 # source ~/.bash-powerline.sh
