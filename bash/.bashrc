@@ -24,12 +24,16 @@ alias myip6="curl v6.ident.me"
 alias spm="sudo pacman"
 alias top="htop"
 
-alias vim="nvim"
-alias vi="nvim"
+alias vi="vim"
 
-PS1='[\u@\h \W]\$ '
+#PS1='[\u@\h \W]\$ '
 
-export EDITOR=nvim
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+export EDITOR=vim
 #alias rgmp3='/home/ludwig/shellscripts/replaygain/mp3/rgmp3.sh'
 #export LIBVA_DRIVER_NAME=vdpau
 #export VDPAU_DRIVER=r600
