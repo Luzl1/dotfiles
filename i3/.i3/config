@@ -188,10 +188,16 @@ bar {
 # exec --no-startup-id urxvtd -q -f -o &
 exec --no-startup-id nextcloud &
 # exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
+<<<<<<< Updated upstream
 # exec --no-startup-id wicd-client --tray
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
 exec --no-startup-id 3proxy /opt/3proxy/3proxy.cfg &
+=======
+exec --no-startup-id wicd-client --tray
+# exec --no-startup-id volumeicon
+exec --no-startup-id pasystray
+>>>>>>> Stashed changes
 # exec --no-startup-id $HOME/bin/autostart-i3.sh
 #exec --no-startup-id $HOME/bin/xplanet.sh
 
