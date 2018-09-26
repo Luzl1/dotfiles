@@ -47,6 +47,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'wsdjeg/vim-fetch'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wincent/command-t'
@@ -61,6 +62,7 @@ Plug 'tomasr/molokai'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -111,7 +113,7 @@ let g:airline_powerline_fonts=1	"Make powerline symbols show
 let g:airline#extensions#tabline#enabled=1 "Make tabline show up
 let g:airline#extensions#tabline#buffer_nr_show = 1
 " let g:airline_theme='powerlineish'
-let g:airline_theme='onedark'
+let g:airline_theme='gruvbox'
 let g:netrw_liststyle=3
 
 
@@ -286,7 +288,7 @@ nmap <F5> :call Preserve("%s/\\s\\+$//e")<CR>
 " * Keybindings
 " *****************************************************
 
-let mapleader=","
+let mapleader="\<SPACE>"
 
 
 "Faster shortcut for commentig. Requires tComment Plugin
@@ -306,7 +308,7 @@ nmap <leader>b :ls<CR>:buffer<space>
 
 let g:onedark_terminal_italics = 1
 syntax on
-colorscheme onedark
+colorscheme gruvbox
 " colorscheme railscasts
 " let g:molokai_original = 1
 " let g:rehash256 = 1

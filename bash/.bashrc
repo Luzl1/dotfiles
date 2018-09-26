@@ -9,8 +9,8 @@ alias ls='ls --color=auto'
 alias ll="ls -lhA --color=auto"
 alias lsl="ls -lhFA --color | less -R"
 
-alias cd..='cd ..' 
-alias ..='cd ..' 
+alias cd..='cd ..'
+alias ..='cd ..'
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -26,12 +26,16 @@ alias top="htop"
 
 alias vi="vim"
 
-#PS1='[\u@\h \W]\$ '
+# source ~/.bash-powerline.sh
 
-parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+# PS1='[\u@\h \W]\$ '
+
+if [ $(id -u) -eq 0 ];
+then # you are root, make the prompt red
+    PS1='\[\033[1;32m\](\[\033[1;32m\]\u\[\033[1;31m\]@\h\[\033[1;31m\]:\[\033[1;36m\]\w\[\033[1;32m\])\[\033[1;36m\]\$ \[\033[0;37m\]'
+else
+    PS1='\[\e[1;37m\]\u@\h\[\e[m\] \[\e[0;37m\]\w\[\e[m\] \[\e[1;31m\]$(__git_ps1 "(%s)")\[\e[m\] \[\e[1;37m\]\$ \[\e[m\]\[\e[1;37m\] '
+fi
 
 export EDITOR=vim
 #alias rgmp3='/home/ludwig/shellscripts/replaygain/mp3/rgmp3.sh'
@@ -70,4 +74,24 @@ function extract {
         echo "$1 - file does not exist"
     fi
 fi
+}
+
+# source ~/.git-completion.bash
+# source ~/.git-prompt.sh 
+
+#fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+bind -x '"\C-p": vim $(fzf);'
+
+
+sf() {
+  if [ "$#" -lt 1 ]; then echo "Supply string to search for!"; return 1; fi
+  printf -v search "%q" "$*"
+  include="ts,yml,js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,hs,rb,conf,fa,lst"
+  exclude=".config,.git,node_modules,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist"
+  rg_command='rg --column --line-number --no-heading --no-messages --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{'$include'}" -g "!{'$exclude'}/*"'
+  files=`eval $rg_command $search | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}'`
+  [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
