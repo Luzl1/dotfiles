@@ -211,8 +211,8 @@ for_window [class="Signal" instance="signal"] move container to workspace 3
 
 for_window [class="Fsearch" instance=hhsfsearch"] floating enable
 
-
-
+for_window [class="Gajim" instance="gajim"] floating enable
+for_window [class="Gajim" instance="gajim"] move conatiner to workspace 3
 
 
 # Workspace names
