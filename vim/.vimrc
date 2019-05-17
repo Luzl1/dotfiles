@@ -49,6 +49,7 @@ Plug 'wsdjeg/vim-fetch'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wincent/command-t'
+Plug 'cyberkov/openhab-vim'
 
 "* Python
 " Plug 'klen/python-mode'
