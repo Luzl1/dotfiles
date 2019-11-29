@@ -180,13 +180,14 @@ bar {
 #Autostart
 # exec --no-startup-id dropbox &
 # exec --no-startup-id urxvtd -q -f -o &
+exec --no-startup-id termite --exec tmux
 exec --no-startup-id nextcloud &
 # exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
 # exec --no-startup-id wicd-client --tray
-#exec --no-startup-id nm-applet
-exec --no-startup-id pasystray
+exec --no-startup-id nm-applet
+# exec --no-startup-id pasystray
 exec --no-startup-id 3proxy /opt/3proxy/3proxy.cfg &
-exec --no-startup-id wicd-client --tray
+# exec --no-startup-id wicd-client --tray
 # exec --no-startup-id volumeicon
 exec --no-startup-id pasystray
 # exec --no-startup-id $HOME/bin/autostart-i3.sh
