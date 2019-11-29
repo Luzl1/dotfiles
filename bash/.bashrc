@@ -28,6 +28,10 @@ alias vi="vim"
 
 # source ~/.bash-powerline.sh
 
+# $ To install git-prompt: curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
+source ~/.bash_git
+
+
 # PS1='[\u@\h \W]\$ '
 
 if [ $(id -u) -eq 0 ];
