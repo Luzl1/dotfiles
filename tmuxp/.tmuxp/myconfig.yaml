@@ -1,0 +1,12 @@
+session_name: tmuxp
+windows:
+  - window_name: bash
+    layout: tiled
+    panes:
+      -           # pane no. 1
+  - window_name: vimwiki
+    layout: tiled
+    panes:
+      - shell_command:
+        - vim -c "VimwikiIndex" #start vimwiki 
+
