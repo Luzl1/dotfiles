@@ -51,6 +51,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wincent/command-t'
+Plug 'vimwiki/vimwiki'
+
 
 "* Python
 " Plug 'klen/python-mode'
@@ -131,6 +133,13 @@ let g:netrw_liststyle=3
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 command Wq :execute 'W:' | :q
 command WQ :Wq
+
+"vimwiki syntax highlightning
+let wiki = {}
+let wiki.path = '~/Nextcloud/documents/vimwiki/'
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+let g:vimwiki_list = [wiki]
+let g:vimwiki_folding = 'expr'
 
 
 
