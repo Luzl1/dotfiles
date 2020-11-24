@@ -180,7 +180,7 @@ bar {
 #Autostart
 # exec --no-startup-id dropbox &
 # exec --no-startup-id urxvtd -q -f -o &
-exec --no-startup-id termite --exec tmux
+exec --no-startup-id termite --exec "tmuxp load myconfig"
 exec --no-startup-id nextcloud &
 # exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
 # exec --no-startup-id wicd-client --tray
