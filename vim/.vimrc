@@ -7,8 +7,8 @@ filetype off
 "**** Autoreload config file
 "***********************************************
 augroup loadinitvim
-    au!
-    autocmd bufwritepost .vimrc source ~/.vimrc
+	au!
+	autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
 
 
@@ -22,9 +22,9 @@ augroup END
 "************************************************
 "
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 
@@ -51,8 +51,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wincent/command-t'
-Plug 'vimwiki/vimwiki'
 
+"* Vimwiki
+Plug 'vimwiki/vimwiki'
 
 "* Python
 " Plug 'klen/python-mode'
@@ -134,12 +135,22 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 command Wq :execute 'W:' | :q
 command WQ :Wq
 
-"vimwiki syntax highlightning
+"vimwiki 
 let wiki = {}
-let wiki.path = '~/Nextcloud/documents/vimwiki/'
-let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
-let g:vimwiki_list = [wiki]
-let g:vimwiki_folding = 'expr'
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
+let g:vimwiki_folding = 'list'
+let g:vimwiki_global_ext = 0 "don't consider every md-file as wikifile
+let g:vimwiki_list = [{
+                      \ 'path': '~/Nextcloud/documents/vimwiki/', 
+	              \ 'path_html': '~/Nextcloud/documents/vimwiki_html',
+		      \ 'syntax': 'markdown',
+                      \ 'ext': '.md', 
+                      \ 'custom_wiki2html': '~/Nextcloud/documents/vimwiki/wiki2html.sh',
+		      \ 'template_path': '~/Nextcloud/documents/vimwiki/template/',
+		      \ 'template_default':'markdown',
+                      \ 'template_ext':'.html'
+		      \ }]
+
 
 
 
@@ -196,9 +207,9 @@ let g:ctrlp_use_caching = 0
 "*********************************************
 
 let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --color "always"
-  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
-  \ -g "!{.git,.icons,node_modules,vendor}/*" '
+			\ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --color "always"
+			\ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+			\ -g "!{.git,.icons,node_modules,vendor}/*" '
 
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
