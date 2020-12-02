@@ -28,7 +28,8 @@ floating_modifier $mod
 #bindsym $mod+Return exec i3-sensible-terminal
 #bindsym $mod+Return exec urxvt -bg black -fg white +sb
 # bindsym $mod+Return exec urxvtc
-bindsym $mod+Return exec termite
+#bindsym $mod+Return exec termite
+bindsym $mod+Return exec kitty
 #bindsym $mod+Return exec roxterm
 #bindsym $mod+Return exec terminator
 
@@ -176,7 +177,7 @@ bar {
 #status_command ~/bin/conky-i3.sh
 # status_command i3status
         font pango:Source Sans Pro, FontAwesome 8
-        # font pango:RobotoMono Nerd Font Regular 8
+         # font pango:RobotoMono Nerd Font Regular 8
         # font pango:Monospace, IconicIcons 8
         #status_command py3status -c ~/.i3status.conf
         status_command i3blocks
@@ -185,11 +186,11 @@ bar {
 #mode dock
 }
 #Autostart
-exec --no-startup-id dropbox &
+# exec --no-startup-id dropbox &
 # exec --no-startup-id urxvtd -q -f -o &
 exec --no-startup-id nextcloud &
-exec --no-startup-id feh --bg-scale ~/wallpaper/expanse.jpg
-exec --no-startup-id wicd-client --tray
+exec --no-startup-id feh --bg-scale ~/wallpaper/mario.png
+exec --no-startup-id nm-applet
 # exec --no-startup-id volumeicon
 exec --no-startup-id pasystray
 exec --no-startup-id $HOME/bin/autostart-i3.sh
@@ -212,7 +213,7 @@ for_window [class="Signal" instance="signal"] move container to workspace 3
 for_window [class="Fsearch" instance=hhsfsearch"] floating enable
 
 for_window [class="Gajim" instance="gajim"] floating enable
-for_window [class="Gajim" instance="gajim"] move conatiner to workspace 3
+for_window [class="Gajim" instance="gajim"] move container to workspace 3
 
 
 # Workspace names
