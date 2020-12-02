@@ -1,4 +1,4 @@
-#
+
 # ~/.bashrc
 #
 
@@ -25,6 +25,7 @@ alias spm="sudo pacman"
 alias top="htop"
 
 alias vi="vim"
+alias cat="bat"
 
 # source ~/.bash-powerline.sh
 
@@ -39,8 +40,8 @@ fi
 
 export EDITOR=vim
 #alias rgmp3='/home/ludwig/shellscripts/replaygain/mp3/rgmp3.sh'
-#export LIBVA_DRIVER_NAME=vdpau
-#export VDPAU_DRIVER=r600
+export LIBVA_DRIVER_NAME=i965
+export VDPAU_DRIVER=va_gl
 eval "$(thefuck --alias)"
 export TERM=xterm-256color
 
@@ -81,9 +82,31 @@ source ~/.git-prompt.sh
 
 #fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules,.cache}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="
+--layout=reverse
+--info=inline
+--height=80%
+--multi
+--preview-window=:hidden
+--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
+--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
+--prompt='∼ ' --pointer='▶' --marker='✓'
+--bind '?:toggle-preview'
+"
 bind -x '"\C-p": vim $(fzf);'
+
+#z
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+
+unalias z 2> /dev/null
+
+
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+}
 
 
 sf() {
