@@ -33,14 +33,10 @@ call plug#begin('~/.vim/plugged')
 "* Core Plugins
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
 Plug 'tomtom/tcomment_vim'
 Plug 'rking/ag.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'JazzCore/ctrlp-cmatcher'
-Plug 'nixprime/cpsm', { 'do': 'env PY3=OFF ./install.sh' }
-Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -48,8 +44,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'wsdjeg/vim-fetch'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'wincent/command-t'
 Plug 'cyberkov/openhab-vim'
+Plug 'vimwiki/vimwiki'
 
 "* Python
 " Plug 'klen/python-mode'
@@ -112,7 +108,12 @@ set background=dark
 set splitbelow   "more natutal splitting
 set splitright   "more natural splitting
 
-
+" vim hardcodes background color erase even if the terminfo file does
+" not contain bce (not to mention that libvte based terminals
+" incorrectly contain bce in their terminfo files). This
+" causes incorrect background rendering when using a color
+" theme with a background color.
+let &t_ut=''
 
 let g:airline_powerline_fonts=1	"Make powerline symbols show
 let g:airline#extensions#tabline#enabled=1 "Make tabline show up
@@ -122,7 +123,13 @@ let g:airline_theme='gruvbox'
 let g:netrw_liststyle=3
 
 
-
+"VimWiki
+let wiki = {}
+let g:vimwiki_list = [{'path': '~/Nextcloud/documents/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+" let g:vimwiki_list = [wiki]
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
+let g:vimwiki_folding='list'
+let g:vimwiki_global_ext = 0
 
 
 "Edit privileged file as normal user"
@@ -130,53 +137,6 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 command Wq :execute 'W:' | :q
 command WQ :Wq
 
-
-
-" *********************************************************
-" * CtrlP
-" ********************************************************
-set runtimepath^=~/.config/nvim/bundle/ctrlp.vim
-" let g:ctrlp_show_hidden = 1
-let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_max_depth=40
-" let g:ctrlp_max_files=0
-" let g:ctrlp_follow_symlinks=1
-
-"Start CtrlP always in Mixed Mode
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-"Use very fast pymatcher for file matching
-" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-" let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-
-" let g:cpsm_match_empty_query = 0
-
-let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
-
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-" if executable('ag')
-" 	let g:ctrlp_user_command = 'ag %s --files-with-matches -u -i --hidden -g "" --ignore "\.git$\|\.hg$\|\.svn$"'
-"
-" 	" ag is fast enough that CtrlP doesn't need to cache
-" 	let g:ctrlp_use_caching = 0
-" else
-" 	" Fall back to using git ls-files if Ag is not available
-" 	let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-" 	let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-" endif
-
-" Default to filename searches - so that appctrl will find application
-" controller
-let g:ctrlp_by_filename = 0
-
-" Don't jump to already open window. This is annoying if you are maintaining
-" several Tab workspaces and want to open two windows into the same file.
-let g:ctrlp_switch_buffer = 0
-
-" Set delay to prevent extra search
-let g:ctrlp_lazy_update = 350
-let g:ctrlp_use_caching = 0
 
 
 
@@ -190,73 +150,6 @@ let g:rg_command = '
   \ -g "!{.git,.icons,node_modules,vendor}/*" '
 
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
-
-
-
-" "*********************************************
-" "*      Python-mode settings
-" "*********************************************
-" " Python-mode
-" " Activate rope
-" " Keys:
-" " K             Show python docs
-" " <Ctrl-Space>  Rope autocomplete
-" " <Ctrl-c>g     Rope goto definition
-" " <Ctrl-c>d     Rope show documentation
-" " <Ctrl-c>f     Rope find occurrences
-" " <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-" " [[            Jump on previous class or function (normal, visual, operator modes)
-" " ]]            Jump on next class or function (normal, visual, operator modes)
-" " [M            Jump on previous class or method (normal, visual, operator modes)
-" " ]M            Jump on next class or method (normal, visual, operator modes)
-" let g:pymode_rope = 0
-"
-" " Documentation
-" let g:pymode_doc = 1
-" let g:pymode_doc_key = 'K'
-"
-" "Linting
-" let g:pymode_lint = 1
-" let g:pymode_lint_checker = "pyflakes,pep8"
-"
-" " Auto check on save
-" let g:pymode_lint_write = 1
-"
-" " Support virtualenv
-" let g:pymode_virtualenv = 1
-"
-" " Enable breakpoints plugin
-" let g:pymode_breakpoint = 1
-" let g:pymode_breakpoint_bind = '<leader>b'
-"
-" " syntax highlighting
-" let g:pymode_syntax = 1
-" let g:pymode_syntax_all = 1
-" let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-" let g:pymode_syntax_space_errors = g:pymode_syntax_all
-"
-" " Don't autofold code
-" let g:pymode_folding = 0
-"
-"
-" "********************************************
-" "          jedi-vim
-" "*******************************************
-"
-" " Use <leader>l to toggle display of whitespace
-" nmap <leader>l :set list!<CR>
-" " automatically change window's cwd to file's dir
-" set autochdir
-"
-" " I'm prefer spaces to tabs
-" set tabstop=4
-" set shiftwidth=4
-" set expandtab
-"
-" " more subtle popup colors
-" if has ('gui_running')
-"     highlight Pmenu guibg=#cccccc gui=bold
-" endif
 
 
 
@@ -288,6 +181,9 @@ nmap <F5> :call Preserve("%s/\\s\\+$//e")<CR>
 
 let mapleader="\<SPACE>"
 
+map <leader>p :Files<CR>
+nnoremap <leader>f :BLines<CR>
+nnoremap <leader>g :Rg<CR>
 
 "Faster shortcut for commentig. Requires tComment Plugin
 map <leader>c <c-_><c-_>
@@ -295,14 +191,15 @@ map <leader>c <c-_><c-_>
 "Shortcut for editing ~/.vimrc
 nnoremap <leader>v :e ~/.vimrc<CR>
 
-"Shortcut for Gundo
-nnoremap <leader>u :GundoToggle<CR>
+"Shortcut for undotree
+nnoremap <leader>u :UndotreeToggle<CR>
 
 "NerdTree
 map <C-n> :NERDTreeToggle<CR>
 
 " For switching between many opened file by using ctrl+l or ctrl+h
-nmap <leader>b :ls<CR>:buffer<space>
+" nmap <leader>b :ls<CR>:buffer<space>
+nmap <leader>b :Buffers<CR>
 
 "Navigate splits with ctrl+j ctrl+k ctrl+h ctrl+l
 nnoremap <C-J> <C-W><C-J>
